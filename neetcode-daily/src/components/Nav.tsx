@@ -5,6 +5,7 @@ const links = [
   { to: '/problems', label: 'Problems' },
   { to: '/learn', label: 'Python' },
   { to: '/notes', label: 'Notes' },
+  { to: '/email', label: 'Email' },
 ]
 
 export function Nav() {

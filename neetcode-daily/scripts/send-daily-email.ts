@@ -1,5 +1,14 @@
+import { existsSync } from 'node:fs'
 import { writeFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
 import { buildDailyEmail, parseUtcDateKey } from '../src/data/dailyEmail.ts'
+
+/** Load `.env` from cwd if present. Existing env vars (CI secrets) win. */
+function loadLocalEnv(): void {
+  const envPath = resolve(process.cwd(), '.env')
+  if (!existsSync(envPath)) return
+  process.loadEnvFile(envPath)
+}
 
 interface CliOptions {
   preview: boolean
@@ -97,6 +106,7 @@ async function sendWithSmtp(input: {
 }
 
 async function main(): Promise<void> {
+  loadLocalEnv()
   const options = parseArgs(process.argv.slice(2))
   const digest = buildDailyEmail(options.date)
 

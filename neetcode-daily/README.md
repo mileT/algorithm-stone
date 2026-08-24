@@ -44,7 +44,7 @@ cp .env.example .env   # then fill in secrets
 npm run email:send
 ```
 
-GitHub Actions sends it daily at **12:00 UTC** (`.github/workflows/daily-email.yml`). Add these repository secrets:
+GitHub Actions sends it daily at **12:00 UTC** (repo-root `.github/workflows/daily-email.yml`). Add these repository secrets:
 
 | Secret | Required | Purpose |
 | --- | --- | --- |

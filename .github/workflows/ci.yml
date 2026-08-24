@@ -1,9 +1,19 @@
-name: CI
+name: NeetDaily CI
 
 on:
   pull_request:
+    paths:
+      - 'neetcode-daily/**'
+      - '.github/workflows/ci.yml'
   push:
     branches: [main]
+    paths:
+      - 'neetcode-daily/**'
+      - '.github/workflows/ci.yml'
+
+defaults:
+  run:
+    working-directory: neetcode-daily
 
 jobs:
   verify:
@@ -14,6 +24,7 @@ jobs:
         with:
           node-version: '22'
           cache: npm
+          cache-dependency-path: neetcode-daily/package-lock.json
       - run: npm ci
       - run: npm test
       - run: npm run build

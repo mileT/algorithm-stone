@@ -6,6 +6,10 @@ on:
     - cron: '0 12 * * *'
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: neetcode-daily
+
 jobs:
   send:
     runs-on: ubuntu-latest
@@ -15,6 +19,7 @@ jobs:
         with:
           node-version: '22'
           cache: npm
+          cache-dependency-path: neetcode-daily/package-lock.json
       - run: npm ci
       - name: Verify digest
         run: npm test

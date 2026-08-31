@@ -2,6 +2,7 @@
 *.gv
 *.gv.pdf
 out/
+.venv/
 *.mp4
 __pycache__
 animations/videos

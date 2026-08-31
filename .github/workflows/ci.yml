@@ -1,0 +1,31 @@
+name: NeetDaily CI
+
+on:
+  pull_request:
+    paths:
+      - 'neetcode-daily/**'
+      - '.github/workflows/ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'neetcode-daily/**'
+      - '.github/workflows/ci.yml'
+
+defaults:
+  run:
+    working-directory: neetcode-daily
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: neetcode-daily/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run email:preview -- --out daily-email-preview.html

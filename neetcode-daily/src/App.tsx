@@ -6,6 +6,7 @@ import { ProblemsPage } from './pages/ProblemsPage'
 import { ProblemDetailPage } from './pages/ProblemDetailPage'
 import { LearnPage } from './pages/LearnPage'
 import { NotesPage } from './pages/NotesPage'
+import { EmailPage } from './pages/EmailPage'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
               <Route path="/problems/:id" element={<ProblemDetailPage />} />
               <Route path="/learn" element={<LearnPage />} />
               <Route path="/notes" element={<NotesPage />} />
+              <Route path="/email" element={<EmailPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>

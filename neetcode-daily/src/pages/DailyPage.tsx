@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { getDailyProblems, TOTAL_PROBLEMS, todayKey } from '../data/problems'
+import { buildDailyEmail } from '../data/dailyEmail'
 import { useStore } from '../store'
 import { ProblemCard } from '../components/ProblemCard'
 import { HeroArt } from '../components/HeroArt'
@@ -9,6 +10,7 @@ export function DailyPage() {
   const { solvedIds, progress, checkedInToday, checkIn, markDailySolved, setStatus, stats } = useStore()
 
   const daily = useMemo(() => getDailyProblems(new Date(), solvedIds), [solvedIds])
+  const emailed = useMemo(() => buildDailyEmail(new Date()), [])
   const todayDone = progress.dailyCompleted[todayKey()] ?? []
 
   const allDailySolved = daily.every((p) => solvedIds.has(p.id) || todayDone.includes(p.id))
@@ -35,6 +37,9 @@ export function DailyPage() {
           )}
           <Link className="btn btn-ghost" to="/learn">
             Learn Python patterns
+          </Link>
+          <Link className="btn btn-ghost" to="/email">
+            Daily email
           </Link>
           <span className="streak-pill">
             Streak <strong>{progress.streak}</strong> day{progress.streak === 1 ? '' : 's'}
@@ -65,6 +70,21 @@ export function DailyPage() {
             <p>Focused picks from NeetCode 250. Same category when possible so patterns stick.</p>
           </div>
         </div>
+        <div className="email-callout panel">
+          <div>
+            <p className="email-kicker">In today&apos;s email</p>
+            <h3>
+              <Link to="/email">{emailed.problem.name}</Link>
+            </h3>
+            <p>
+              {emailed.problem.difficulty} · {emailed.hints.pattern}. {emailed.hints.concepts.slice(0, 3).join(', ')}.
+            </p>
+          </div>
+          <Link className="btn btn-ghost btn-sm" to="/email">
+            Topic hints
+          </Link>
+        </div>
+
         <div className="daily-grid">
           {daily.map((problem) => (
             <ProblemCard
